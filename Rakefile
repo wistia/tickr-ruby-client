@@ -6,7 +6,7 @@ begin
   Bundler.setup(:default, :development)
 rescue Bundler::BundlerError => e
   $stderr.puts e.message
-  $stderr.puts "Run `bundle install` to install missing gems"
+  $stderr.puts 'Run `bundle install` to install missing gems'
   exit e.status_code
 end
 require 'rake'
@@ -14,13 +14,13 @@ require 'rake'
 require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
-  gem.name = "tickr_client"
-  gem.homepage = "http://github.com/freerobby/tickr_client"
-  gem.license = "MIT"
-  gem.summary = %Q{A Ruby Client for interacting with a Tickr server}
-  gem.description = %Q{TODO: longer description of your gem}
-  gem.email = "robby@freerobby.com"
-  gem.authors = ["Robby Grossman"]
+  gem.name = 'tickr_client'
+  gem.homepage = 'http://github.com/wistia/tickr-ruby-client'
+  gem.license = 'MIT'
+  gem.summary = 'A Ruby Client for interacting with a Tickr server'
+  gem.description = 'A Ruby Client for interacting with a Tickr server'
+  gem.email = 'robby@freerobby.com'
+  gem.authors = ['Robby Grossman']
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new
