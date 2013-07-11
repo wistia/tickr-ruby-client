@@ -91,7 +91,7 @@ describe TickrClient do
 
     describe '#fetch_tickets_async' do
       it 'fetches tickets in a separate thread' do
-        FakeWeb.register_uri :get, 'http://127.0.0.1:8080/tickets/create/10', body: [1, 2].to_json
+        FakeWeb.register_uri :get, 'http://127.0.0.1:8080/tickets/create/10', body: [1, 1, 2].to_json
         client = TickrClient.new(
           servers: [
             {host: '127.0.0.1', port: 8080}
@@ -99,7 +99,7 @@ describe TickrClient do
           cache_size: 10
         )
         client.send(:tickets=, [1, 2])
-        FakeWeb.register_uri :get, 'http://127.0.0.1:8080/tickets/create/8', body: [5, 6, 7, 8, 9, 10, 11, 12].to_json
+        FakeWeb.register_uri :get, 'http://127.0.0.1:8080/tickets/create/8', body: [5, 1, 8].to_json
 
         client.send(:fetch_tickets_async)
         client.send(:tickets).should == [1, 2] # Thread will not have finished yet
@@ -130,7 +130,7 @@ describe TickrClient do
         client.send(:tickets=, [1, 2])
         client.send(:next_server_index=, 1)
 
-        FakeWeb.register_uri :get, 'http://127.0.0.1:8081/tickets/create/8', body: [5, 6, 7, 8, 9, 10, 11, 12].to_json
+        FakeWeb.register_uri :get, 'http://127.0.0.1:8081/tickets/create/8', body: [5, 1, 8].to_json
 
         client.send(:fetch_tickets_from_server, 1).should be_true
         client.send(:tickets).should == [1, 2, 5, 6, 7, 8, 9, 10, 11, 12]
@@ -144,6 +144,16 @@ describe TickrClient do
         client = get_client(cache_size: 10)
         client.send(:tickets=, [5, 6, 7])
         client.send(:replenish_capacity).should == 7
+      end
+    end
+
+    describe '#create_tickets_from_ticket_group' do
+      it 'should create an array of tickets' do
+        TickrClient.any_instance.stub :fetch_tickets
+
+        client = get_client
+        tickets = client.send(:create_tickets_from_ticket_group, [100, 100, 5])
+        tickets.should == [100, 200, 300, 400, 500]
       end
     end
   end
