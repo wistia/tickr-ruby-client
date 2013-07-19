@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Robby Grossman"]
-  s.date = "2013-07-18"
+  s.date = "2013-07-25"
   s.description = "A Ruby Client for interacting with a Tickr server"
   s.email = "robby@freerobby.com"
   s.extra_rdoc_files = [
@@ -26,9 +26,12 @@ Gem::Specification.new do |s|
     "README.md",
     "Rakefile",
     "VERSION",
+    "lib/tickr/interfaces/tickr_active_record_interface.rb",
     "lib/tickr_client.rb",
+    "spec/lib/tickr/interfaces/tickr_active_record_interface_spec.rb",
     "spec/spec_helper.rb",
-    "spec/tickr_client_spec.rb"
+    "spec/tickr_client_spec.rb",
+    "tickr_client.gemspec"
   ]
   s.homepage = "http://github.com/wistia/tickr-ruby-client"
   s.licenses = ["MIT"]
@@ -42,25 +45,31 @@ Gem::Specification.new do |s|
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<thread_safe>, ["~> 0.1"])
       s.add_runtime_dependency(%q<json>, ["~> 1.8"])
+      s.add_development_dependency(%q<activerecord>, [">= 2.3.0"])
       s.add_development_dependency(%q<bundler>, ["~> 1.2"])
       s.add_development_dependency(%q<fakeweb>, ["~> 1.3"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.8"])
       s.add_development_dependency(%q<rspec>, ["~> 2.13"])
+      s.add_development_dependency(%q<sqlite3>, ["~> 1.3"])
     else
       s.add_dependency(%q<thread_safe>, ["~> 0.1"])
       s.add_dependency(%q<json>, ["~> 1.8"])
+      s.add_dependency(%q<activerecord>, [">= 2.3.0"])
       s.add_dependency(%q<bundler>, ["~> 1.2"])
       s.add_dependency(%q<fakeweb>, ["~> 1.3"])
       s.add_dependency(%q<jeweler>, ["~> 1.8"])
       s.add_dependency(%q<rspec>, ["~> 2.13"])
+      s.add_dependency(%q<sqlite3>, ["~> 1.3"])
     end
   else
     s.add_dependency(%q<thread_safe>, ["~> 0.1"])
     s.add_dependency(%q<json>, ["~> 1.8"])
+    s.add_dependency(%q<activerecord>, [">= 2.3.0"])
     s.add_dependency(%q<bundler>, ["~> 1.2"])
     s.add_dependency(%q<fakeweb>, ["~> 1.3"])
     s.add_dependency(%q<jeweler>, ["~> 1.8"])
     s.add_dependency(%q<rspec>, ["~> 2.13"])
+    s.add_dependency(%q<sqlite3>, ["~> 1.3"])
   end
 end
 
