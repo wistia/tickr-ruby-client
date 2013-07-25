@@ -69,7 +69,7 @@ describe TickrClient do
   describe 'private instance methods' do
     describe '#fetch_tickets' do
       it 'fetches tickets from servers one at a time' do
-        Net::HTTP.should_receive(:get).and_return([1, 2, 3, 4, 5].to_json)
+        Net::HTTP.should_receive(:get).and_return({'first' => 1, 'increment' => 1, 'count' => 5}.to_json)
         client = TickrClient.new(
           servers: [
             {host: '127.0.0.1', port: 8080},
@@ -91,7 +91,7 @@ describe TickrClient do
 
     describe '#fetch_tickets_async' do
       it 'fetches tickets in a separate thread' do
-        FakeWeb.register_uri :get, 'http://127.0.0.1:8080/tickets/create/10', body: [1, 1, 2].to_json
+        FakeWeb.register_uri :get, 'http://127.0.0.1:8080/tickets/create/10', body: {'first' => 1, 'increment' => 1, 'count' => 2}.to_json
         client = TickrClient.new(
           servers: [
             {host: '127.0.0.1', port: 8080}
@@ -99,7 +99,7 @@ describe TickrClient do
           cache_size: 10
         )
         client.send(:tickets=, [1, 2])
-        FakeWeb.register_uri :get, 'http://127.0.0.1:8080/tickets/create/8', body: [5, 1, 8].to_json
+        FakeWeb.register_uri :get, 'http://127.0.0.1:8080/tickets/create/8', body: {'first' => 5, 'increment' => 1, 'count' => 8}.to_json
 
         client.send(:fetch_tickets_async)
         client.send(:tickets).should == [1, 2] # Thread will not have finished yet
@@ -130,7 +130,7 @@ describe TickrClient do
         client.send(:tickets=, [1, 2])
         client.send(:next_server_index=, 1)
 
-        FakeWeb.register_uri :get, 'http://127.0.0.1:8081/tickets/create/8', body: [5, 1, 8].to_json
+        FakeWeb.register_uri :get, 'http://127.0.0.1:8081/tickets/create/8', body: {'first' => 5, 'increment' => 1, 'count' => 8}.to_json
 
         client.send(:fetch_tickets_from_server, 1).should be_true
         client.send(:tickets).should == [1, 2, 5, 6, 7, 8, 9, 10, 11, 12]
@@ -152,7 +152,7 @@ describe TickrClient do
         TickrClient.any_instance.stub :fetch_tickets
 
         client = get_client
-        tickets = client.send(:create_tickets_from_ticket_group, [100, 100, 5])
+        tickets = client.send(:create_tickets_from_ticket_group, {'first' => 100, 'increment' => 100, 'count' => 5})
         tickets.should == [100, 200, 300, 400, 500]
       end
     end
