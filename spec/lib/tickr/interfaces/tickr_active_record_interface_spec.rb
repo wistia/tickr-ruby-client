@@ -25,15 +25,19 @@ describe TickrActiveRecordInterface do
   end
 
   it 'parent accepts ID in place of an autoincrement value' do
-    last_obj = TestModel.create!
-    last_id = last_obj.id
-    new_id = last_id + 5
-    new_obj = TestModel.create! id: new_id
-    new_obj.id.should_not == last_id + 1
-    new_obj.id.should == new_id
+    # Hard-set some nonincremental IDs.
+    (TestModel.create! id: 1).id.should == 1
+    (TestModel.create! id: 6).id.should == 6
   end
   it 'parent creates ID from tickr' do
     $tickr.stub(:get_ticket).and_return(115010)
     TestModel.create!.id.should == 115010
+  end
+
+  it 'raises an exception if we save a record with no ID' do
+    obj = TestModel.new
+    obj.id.should be_nil
+    $tickr.stub(:get_ticket).and_return(nil)
+    lambda{obj.save!}.should raise_error(TickrIdNotSetError)
   end
 end
