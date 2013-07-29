@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Robby Grossman"]
-  s.date = "2013-07-25"
+  s.date = "2013-07-29"
   s.description = "A Ruby Client for interacting with a Tickr server"
   s.email = "robby@freerobby.com"
   s.extra_rdoc_files = [
@@ -26,9 +26,9 @@ Gem::Specification.new do |s|
     "README.md",
     "Rakefile",
     "VERSION",
-    "lib/tickr/interfaces/tickr_active_record_interface.rb",
+    "lib/tickr/interfaces/active_record.rb",
     "lib/tickr_client.rb",
-    "spec/lib/tickr/interfaces/tickr_active_record_interface_spec.rb",
+    "spec/lib/tickr/interfaces/active_record_spec.rb",
     "spec/spec_helper.rb",
     "spec/tickr_client_spec.rb",
     "tickr_client.gemspec"

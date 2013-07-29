@@ -35,10 +35,10 @@ to make it so!).
 All you need to do to add ActiveRecord support to your ActiveRecord models is
 require our interface library and include our mixin, e.g.:
 
-    require 'tickr/interfaces/tickr_active_record_interface' # not required with gem by default
+    require 'tickr/interfaces/active_record' # not required with gem by default
     
     class Person < ActiveRecord::Base
-      include TickrActiveRecordInterface
+      include Tickr::Interfaces::ActiveRecord
       
       # …your code here
     end

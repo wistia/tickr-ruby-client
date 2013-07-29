@@ -1,10 +1,10 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../../spec_helper')
 
-require File.join(File.dirname(__FILE__), '..', '..', '..', '..', 'lib', 'tickr', 'interfaces', 'tickr_active_record_interface')
+require File.join(File.dirname(__FILE__), '..', '..', '..', '..', 'lib', 'tickr', 'interfaces', 'active_record')
 
 require 'active_record'
 
-describe TickrActiveRecordInterface do
+describe Tickr::Interfaces::ActiveRecord do
   before do
     TickrClient.any_instance.stub :fetch_tickets
     $tickr = TickrClient.new({servers: [{}]})
@@ -20,7 +20,7 @@ describe TickrActiveRecordInterface do
     end
 
     class TestModel < ActiveRecord::Base
-      include TickrActiveRecordInterface
+      include Tickr::Interfaces::ActiveRecord
     end
   end
 
