@@ -70,7 +70,7 @@ class TickrClient
   # 2. Second element of ticket group is the increment between consecutive tickets.
   # 3. Third element of ticket group is the number of tickets to create.
   def create_tickets_from_ticket_group(group)
-    initial_ticket, diff, num_of_tickets = group
+    initial_ticket, diff, num_of_tickets = group['first'], group['increment'], group['count']
     new_tickets = [initial_ticket]
 
     (num_of_tickets - 1).times do
