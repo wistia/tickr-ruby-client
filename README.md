@@ -14,9 +14,9 @@ makes no guarantee about sequentiality.
 
     $tickr = TickrClient.new(
       servers: [
-        {host: '192.168.1.1', port: 8080},
-        {host: '192.168.1.2', port: 8080},
-        {host: '192.168.1.3', port: 8080}
+        {host: '192.168.1.1', port: 8080, http_auth_password: 'lockd0wn'},
+        {host: '192.168.1.2', port: 8080, http_auth_password: 'lockd0wn'},
+        {host: '192.168.1.3', port: 8080, http_auth_password: 'lockd0wn'}
       ],
       timeout: 1000, # Try next host after 1 second.
       cache_size: 100, # Keep up to 100 tickets (unique IDs) at the ready.

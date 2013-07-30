@@ -39,10 +39,16 @@ class TickrClient
 
   def fetch_tickets_from_server(index)
     new_ticket_group = begin
-      uri = URI("http://#{servers[index][:host]}:#{servers[index][:port]}/tickets/create/#{replenish_capacity}")
-      Timeout::timeout(timeout / 1000.0) do
-        JSON.parse(Net::HTTP.get(uri))
+      uri = URI.parse("http://#{servers[index][:host]}:#{servers[index][:port]}/tickets/create/#{replenish_capacity}")
+      request = Net::HTTP::Get.new(uri.request_uri)
+      if servers[index][:http_auth_password] && servers[index][:http_auth_password] != ''
+        request.basic_auth '', servers[index][:http_auth_password]
       end
+
+      response = Timeout::timeout(timeout / 1000.0) do
+        Net::HTTP.new(uri.host, uri.port).start{|http| http.request(request)}
+      end
+      JSON.parse(response.body)
     rescue Timeout::Error
       return false
     end
