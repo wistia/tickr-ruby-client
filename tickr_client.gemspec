@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "tickr_client"
-  s.version = "0.0.1"
+  s.version = "1.0.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Robby Grossman"]
-  s.date = "2013-07-29"
+  s.date = "2013-07-30"
   s.description = "A Ruby Client for interacting with a Tickr server"
   s.email = "robby@freerobby.com"
   s.extra_rdoc_files = [
